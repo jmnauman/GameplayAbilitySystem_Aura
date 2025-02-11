@@ -1,43 +1,40 @@
 {
-  "FileVersion": 3,
-  "EngineAssociation": "5.2",
-  "Category": "",
-  "Description": "",
-  "Modules": [
-    {
-      "Name": "Aura",
-      "Type": "Runtime",
-      "LoadingPhase": "Default",
-        "AdditionalDependencies": [
-            "Engine",
-            "GameplayAbilities",
-            "UMG",
-            "CoreUObject",
-            "EnhancedInput",
-            "AIModule"
-        ]
-    }
-  ],
-  "Plugins": [
-    {
-      "Name": "ModelingToolsEditorMode",
-      "Enabled": true
-    },
-    {
-      "Name": "GameplayAbilities",
-      "Enabled": true
-    },
-    {
-      "Name": "MotionWarping",
-      "Enabled": true
-    },
-    {
-      "Name": "VisualStudioTools",
-      "Enabled": true
-    }
-  ],
-  "TargetPlatforms": [],
-  "AdditionalRootDirectories": [],
-  "AdditionalPluginDirectories": [],
-  "EpicSampleNameHash": ""
+	"FileVersion": 3,
+	"EngineAssociation": "5.2",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Aura",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"GameplayAbilities",
+				"UMG",
+				"CoreUObject",
+				"EnhancedInput",
+				"AIModule",
+				"Niagara"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
+		},
+		{
+			"Name": "MotionWarping",
+			"Enabled": true
+		},
+		{
+			"Name": "VisualStudioTools",
+			"Enabled": true
+		}
+	]
 }
