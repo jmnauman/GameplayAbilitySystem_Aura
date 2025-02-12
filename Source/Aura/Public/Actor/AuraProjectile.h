@@ -25,6 +25,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = true))
 	FDamageEffectParams DamageEffectParams;
 
+	// Maintiaining this pointerj with uproperty means that the homing targets we create will get garbage collected
+	UPROPERTY()
+	TObjectPtr<USceneComponent> HomingTargetSceneComponent;
+	
 protected:
 	virtual void BeginPlay() override;
 	void OnHit();
