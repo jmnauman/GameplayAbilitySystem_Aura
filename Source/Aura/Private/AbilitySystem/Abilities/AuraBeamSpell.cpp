@@ -5,16 +5,18 @@
 
 #include "GameFramework/Character.h"
 
-void UAuraBeamSpell::StoreMouseDataInfo(const FHitResult& HitResult)
+void UAuraBeamSpell::StoreMouseDataInfo(const FHitResult& HitResult, bool& bMouseDataWasStored)
 {
 	if (HitResult.bBlockingHit)
 	{
 		MouseHitLocation = HitResult.ImpactPoint;
 		MouseHitActor = HitResult.GetActor();
+		bMouseDataWasStored = true;
 	}
 	else
 	{
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
+		bMouseDataWasStored = false;
 	}
 }
 

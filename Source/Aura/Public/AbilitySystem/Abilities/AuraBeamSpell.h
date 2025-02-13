@@ -16,7 +16,7 @@ class AURA_API UAuraBeamSpell : public UAuraDamageGameplayAbility
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void StoreMouseDataInfo(const FHitResult& HitResult);
+	void StoreMouseDataInfo(const FHitResult& HitResult, bool& bMouseDataWasStored);
 
 	UFUNCTION(BlueprintCallable)
 	void StoreOwnerVariables();
