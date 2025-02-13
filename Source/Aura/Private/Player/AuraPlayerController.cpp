@@ -130,11 +130,11 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					bAutoRunning = true;
 				}
 			}
-		}
 
-		if (GetASC() && !GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputPressed))
-		{
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
+			if (GetASC() && !GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputPressed))
+			{
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
+			}
 		}
 			
 		FollowTime = 0.f;
@@ -148,8 +148,11 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
-		if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
-		return;
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+			return;
+		}
 	}
 
 	if (bTargeting || bShiftKeyDown)
