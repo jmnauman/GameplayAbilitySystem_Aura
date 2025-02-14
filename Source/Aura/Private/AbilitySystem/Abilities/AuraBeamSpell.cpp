@@ -65,6 +65,13 @@ void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
 				MouseHitActor = HitResult.GetActor();
 			}
 		}
+
+		ICombatInterface* CombatInterface = Cast<ICombatInterface>(MouseHitActor);
+		if (CombatInterface &&
+			!CombatInterface->GetOnDeathDelegate().IsAlreadyBound(this, &UAuraBeamSpell::PrimaryTargetDied))
+		{
+			CombatInterface->GetOnDeathDelegate().AddDynamic(this, &UAuraBeamSpell::PrimaryTargetDied);
+		}
 	}
 }
 
@@ -91,4 +98,14 @@ void UAuraBeamSpell::StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTarget
 		OutAdditionalTargets,
 		MouseHitActor->GetActorLocation(),
 		FName("Enemy"));
+
+	for (AActor* Target : OutAdditionalTargets)
+	{
+		ICombatInterface* CombatInterface = Cast<ICombatInterface>(MouseHitActor);
+		if (CombatInterface &&
+			!CombatInterface->GetOnDeathDelegate().IsAlreadyBound(this, &UAuraBeamSpell::AdditionalTargetDied))
+		{
+			CombatInterface->GetOnDeathDelegate().AddDynamic(this, &UAuraBeamSpell::AdditionalTargetDied);
+		}
+	}
 }
