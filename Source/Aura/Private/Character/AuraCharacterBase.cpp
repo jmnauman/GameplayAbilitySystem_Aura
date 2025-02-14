@@ -140,14 +140,14 @@ ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()
 	return CharacterClass;
 }
 
-FOnASCRegistered* AAuraCharacterBase::GetOnASCRegisteredDelegate()
+FOnASCRegistered& AAuraCharacterBase::GetOnASCRegisteredDelegate()
 {
-	return &OnASCRegistered;
+	return OnASCRegistered;
 }
 
-FOnDeath* AAuraCharacterBase::GetOnDeathDelegate()
+FOnDeath& AAuraCharacterBase::GetOnDeathDelegate()
 {
-	return &OnDeath;
+	return OnDeath;
 }
 
 USkeletalMeshComponent* AAuraCharacterBase::GetWeapon_Implementation()

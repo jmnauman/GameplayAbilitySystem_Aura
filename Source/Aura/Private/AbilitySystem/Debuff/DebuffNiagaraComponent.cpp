@@ -26,7 +26,7 @@ void UDebuffNiagaraComponent::BeginPlay()
 		// weak lambda holds a reference to something, without increasing its reference count
 		// lambdas hold a reference to captured variables
 		// this prevents problems with garbage collection
-		CombatInterface->GetOnASCRegisteredDelegate()->AddWeakLambda(this, [this](UAbilitySystemComponent* InASC)
+		CombatInterface->GetOnASCRegisteredDelegate().AddWeakLambda(this, [this](UAbilitySystemComponent* InASC)
 		{
 			InASC->RegisterGameplayTagEvent(DebuffTag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UDebuffNiagaraComponent::DebuffTagChanged);
 		});
@@ -34,7 +34,7 @@ void UDebuffNiagaraComponent::BeginPlay()
 
 	if (CombatInterface)
 	{
-		CombatInterface->GetOnDeathDelegate()->AddDynamic(this, &UDebuffNiagaraComponent::OnOwnerDeath);
+		CombatInterface->GetOnDeathDelegate().AddDynamic(this, &UDebuffNiagaraComponent::OnOwnerDeath);
 	}
 }
 
