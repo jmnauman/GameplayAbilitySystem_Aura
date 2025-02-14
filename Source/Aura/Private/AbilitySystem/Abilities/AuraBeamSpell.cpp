@@ -101,7 +101,7 @@ void UAuraBeamSpell::StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTarget
 
 	for (AActor* Target : OutAdditionalTargets)
 	{
-		ICombatInterface* CombatInterface = Cast<ICombatInterface>(MouseHitActor);
+		ICombatInterface* CombatInterface = Cast<ICombatInterface>(Target);
 		if (CombatInterface &&
 			!CombatInterface->GetOnDeathDelegate().IsAlreadyBound(this, &UAuraBeamSpell::AdditionalTargetDied))
 		{
