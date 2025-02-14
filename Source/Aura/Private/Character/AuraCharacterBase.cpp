@@ -63,6 +63,11 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 	Dissolve();
 	bDead = true;
 	OnDeath.Broadcast(this);
+
+	if (UAbilitySystemComponent* Asc = GetAbilitySystemComponent())
+	{
+		Asc->CancelAllAbilities();
+	}
 }
 
 void AAuraCharacterBase::BeginPlay()
