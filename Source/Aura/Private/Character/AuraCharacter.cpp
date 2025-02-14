@@ -157,6 +157,16 @@ int32 AAuraCharacter::GetPlayerLevel_Implementation()
 	return AuraPlayerState->GetPlayerLevel();
 }
 
+void AAuraCharacter::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
+{
+	Super::MulticastHandleDeath_Implementation(DeathImpulse);
+
+	if (APlayerController* PlayerController = GetController<APlayerController>())
+	{
+		PlayerController->DisableInput(PlayerController);
+	}
+}
+
 void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();

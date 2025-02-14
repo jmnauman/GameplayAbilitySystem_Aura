@@ -40,6 +40,8 @@ public:
 	virtual int32 GetPlayerLevel_Implementation() override;
 	/** end Combat Interface */
 
+	virtual void MulticastHandleDeath_Implementation(const FVector& DeathImpulse) override;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
 	
