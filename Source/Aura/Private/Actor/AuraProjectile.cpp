@@ -11,6 +11,7 @@
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 
 AAuraProjectile::AAuraProjectile()
@@ -42,6 +43,16 @@ void AAuraProjectile::BeginPlay()
 	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AAuraProjectile::OnSphereOverlap);
 
 	LoopingSoundComponent = UGameplayStatics::SpawnSoundAttached(LoopingSound, GetRootComponent());
+
+	if (ProjectileMovement->bIsHomingProjectile)
+	{
+		ICombatInterface* HomingTargetCombatInterface =
+			Cast<ICombatInterface>(ProjectileMovement->HomingTargetComponent->GetOwner());
+		if (HomingTargetCombatInterface)
+		{
+			HomingTargetCombatInterface->GetOnDeathDelegate().AddUniqueDynamic(this, &ThisClass::OnHomingTargetDeath);
+		}
+	}
 }
 
 void AAuraProjectile::OnHit()
@@ -101,5 +112,10 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		Destroy();
 	}
 	else bHit = true;
+}
+
+void AAuraProjectile::OnHomingTargetDeath(AActor* DeadActor)
+{
+	ProjectileMovement->bIsHomingProjectile = false;
 }
 
