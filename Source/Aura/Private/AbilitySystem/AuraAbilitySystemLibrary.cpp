@@ -318,6 +318,48 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 	}
 }
 
+void UAuraAbilitySystemLibrary::GetClosestTargets(
+	int32 MaxTargets,
+	const TArray<AActor*>& Actors,
+	TArray<AActor*>& OutClosestTargets,
+	const FVector& Origin,
+	FName ValidTargetIdentifier)
+{
+	OutClosestTargets.Empty();
+
+	// Filter out invalid targets
+	TArray<AActor*> ValidTargets;
+	for (AActor* Actor : Actors)
+	{
+		// TODO: Maybe this would be more flexible if we defined friendly and enemy tags natively?
+		if (Actor->ActorHasTag(ValidTargetIdentifier))
+		{
+			ValidTargets.Add(Actor);
+		}
+	}
+
+	// No need to sort, just copy the array
+	if (ValidTargets.Num() < MaxTargets)
+	{
+		OutClosestTargets = ValidTargets;
+		return;
+	}
+
+	// Take the closest targets
+	Algo::Sort(ValidTargets, [Origin](const AActor* ActorA, const AActor* ActorB)
+	{
+		const float DistanceToA = FVector::DistSquared(Origin, ActorA->GetActorLocation());
+		const float DistanceToB = FVector::DistSquared(Origin, ActorB->GetActorLocation());
+		return DistanceToA < DistanceToB;
+	});
+
+	check(ValidTargets.Num() >= MaxTargets);
+	for (int32 i = 0; i < MaxTargets; i++)
+	{
+		OutClosestTargets.Add(ValidTargets[i]);
+	}
+}
+
 bool UAuraAbilitySystemLibrary::IsNotFriend(AActor* FirstActor, AActor* SecondActor)
 {
 	const bool bBothArePlayers = FirstActor->ActorHasTag(FName("Player")) && SecondActor->ActorHasTag(FName("Player"));
