@@ -4,6 +4,7 @@
 #include "Character/AuraCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -167,6 +168,32 @@ void AAuraCharacter::MulticastHandleDeath_Implementation(const FVector& DeathImp
 	}
 }
 
+void AAuraCharacter::OnRep_Stunned()
+{
+	// We need this, because the tags added in UAuraAttributeSet::Debuff aren't replicated down to client. Dynamic
+	// gameplay effects are not replicated
+	UAuraAbilitySystemComponent* AuraAsc = Cast<UAuraAbilitySystemComponent>(GetAbilitySystemComponent());
+	if (AuraAsc)
+	{
+		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+		
+		FGameplayTagContainer BlockedTags;
+		BlockedTags.AddTag(GameplayTags.Player_Block_CursorTrace);
+		BlockedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+		BlockedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+		BlockedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+
+		if (bIsStunned)
+		{
+			AuraAsc->AddLooseGameplayTags(BlockedTags);	
+		}
+		else
+		{
+			AuraAsc->RemoveLooseGameplayTags(BlockedTags);
+		}
+	}
+}
+
 void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
@@ -177,6 +204,11 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 	OnASCRegistered.Broadcast(AbilitySystemComponent);
 
+	AbilitySystemComponent->RegisterGameplayTagEvent(
+		FAuraGameplayTags::Get().Debuff_Stun,
+		EGameplayTagEventType::NewOrRemoved)
+	.AddUObject(this, &ThisClass::StunTagChanged);
+	
 	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
 	{
 		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
