@@ -26,7 +26,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets);
-
+	
 	UFUNCTION(BlueprintImplementableEvent)
 	void PrimaryTargetDied(AActor* DeadActor);
 
@@ -48,4 +48,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Beam")
 	int32 MaxNumShockTargets = 5;
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveOnDeathNotifyFromPrimaryTarget();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveOnDeathNotifyFromAdditionalTarget(AActor* Actor);
 };
