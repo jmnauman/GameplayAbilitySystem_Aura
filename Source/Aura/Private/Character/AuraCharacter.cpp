@@ -192,6 +192,31 @@ void AAuraCharacter::OnRep_Stunned()
 			AuraAsc->RemoveLooseGameplayTags(BlockedTags);
 		}
 	}
+
+	// todo: For some reason, the stun tag isn't replicated down to Aura on the client. I don't know why this is,
+	// as it seems to be okay for enemies...
+	if (bIsStunned)
+	{
+		StunDebuffComponent->Activate();
+	}
+	else
+	{
+		StunDebuffComponent->Deactivate();
+	}
+}
+
+void AAuraCharacter::OnRep_Burned()
+{
+	// todo: For some reason, the burn tag isn't replicated down to Aura on the client. I don't know why this is,
+	// as it seems to be okay for enemies...
+	if (bIsBurned)
+	{
+		BurnDebuffComponent->Activate();
+	}
+	else
+	{
+		BurnDebuffComponent->Deactivate();
+	}
 }
 
 void AAuraCharacter::InitAbilityActorInfo()
