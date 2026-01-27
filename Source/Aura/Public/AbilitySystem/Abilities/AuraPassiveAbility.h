@@ -23,5 +23,5 @@ public:
 		const FGameplayAbilityActivationInfo ActivationInfo, const
 		FGameplayEventData* TriggerEventData) override;
 
-	void OnDeactivated(const FGameplayTag& AbilityTag);
+	void OnPassiveAbilityActivated(const FGameplayTag& AbilityTag, bool bActivate);
 };

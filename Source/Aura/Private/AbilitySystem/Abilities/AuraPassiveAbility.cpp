@@ -16,23 +16,23 @@ void UAuraPassiveAbility::ActivateAbility(
 
 	if (UAuraAbilitySystemComponent* AuraAsc = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
 	{
-		if (!AuraAsc->DeactivatedPassiveAbility.IsBoundToObject(this))
+		if (ActorInfo && ActorInfo->IsNetAuthority() && !AuraAsc->ActivatedPassiveAbility.IsBoundToObject(this))
 		{
-			AuraAsc->DeactivatedPassiveAbility.AddUObject(this, &ThisClass::OnDeactivated);
+			AuraAsc->ActivatedPassiveAbility.AddUObject(this, &ThisClass::OnPassiveAbilityActivated);
 		}
 	}
 }
 
-void UAuraPassiveAbility::OnDeactivated(const FGameplayTag& AbilityTag)
+void UAuraPassiveAbility::OnPassiveAbilityActivated(const FGameplayTag& AbilityTag, bool bActivate)
 {
-	if (AbilityTags.HasTag(AbilityTag))
+	if (AbilityTags.HasTag(AbilityTag) && !bActivate)
 	{
 		UAuraAbilitySystemComponent* AuraAsc = Cast<UAuraAbilitySystemComponent>(
 			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo()));
 
 		if (AuraAsc)
 		{
-			AuraAsc->DeactivatedPassiveAbility.RemoveAll(this);
+			AuraAsc->ActivatedPassiveAbility.RemoveAll(this);
 		}
 		
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
