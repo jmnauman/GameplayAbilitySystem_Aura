@@ -16,7 +16,7 @@ void UAuraPassiveAbility::ActivateAbility(
 
 	if (UAuraAbilitySystemComponent* AuraAsc = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
 	{
-		if (AuraAsc->DeactivatedPassiveAbility.IsBoundToObject(this))
+		if (!AuraAsc->DeactivatedPassiveAbility.IsBoundToObject(this))
 		{
 			AuraAsc->DeactivatedPassiveAbility.AddUObject(this, &ThisClass::OnDeactivated);
 		}
