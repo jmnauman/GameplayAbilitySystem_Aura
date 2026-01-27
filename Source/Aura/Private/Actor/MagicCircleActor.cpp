@@ -21,3 +21,8 @@ void AMagicCircleActor::Tick(float DeltaTime)
 
 }
 
+void AMagicCircleActor::SetMaterial(UMaterialInterface* Mat)
+{
+	DecalComponent->SetDecalMaterial(Mat);
+}
+

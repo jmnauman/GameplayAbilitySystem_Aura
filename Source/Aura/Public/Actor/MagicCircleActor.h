@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "MagicCircleActor.generated.h"
 
+class UMaterialInterface;
+
 UCLASS()
 class AURA_API AMagicCircleActor : public AActor
 {
@@ -14,6 +16,7 @@ class AURA_API AMagicCircleActor : public AActor
 public:	
 	AMagicCircleActor();
 	virtual void Tick(float DeltaTime) override;
+	void SetMaterial(UMaterialInterface* Mat);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

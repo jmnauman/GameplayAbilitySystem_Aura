@@ -46,6 +46,12 @@ void AAuraPlayerController::HideMagicCircle()
 		MagicCircle->Destroy();
 }
 
+void AAuraPlayerController::SetMagicCircleMaterial(UMaterialInterface* Mat)
+{
+	if (IsValid(MagicCircle))
+		MagicCircle->SetMaterial(Mat);
+}
+
 void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit)
 {
 	if (IsValid(TargetCharacter) && DamageTextComponentClass && IsLocalController())

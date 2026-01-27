@@ -13,6 +13,7 @@ class UNiagaraSystem;
 class UDamageTextComponent;
 class UInputMappingContext;
 class UInputAction;
+class UMaterialInterface;
 struct FInputActionValue;
 class IEnemyInterface;
 class UAuraInputConfig;
@@ -38,6 +39,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void HideMagicCircle();
+	
+	UFUNCTION(BlueprintCallable)
+	void SetMagicCircleMaterial(UMaterialInterface* Mat);
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;

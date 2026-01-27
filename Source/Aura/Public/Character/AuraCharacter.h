@@ -10,6 +10,7 @@
 class UNiagaraComponent;
 class UCameraComponent;
 class USpringArmComponent;
+class UMaterialInterface;
 /**
  * 
  */
@@ -34,6 +35,9 @@ public:
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) override;
 	virtual int32 GetAttributePoints_Implementation() const override;
 	virtual int32 GetSpellPoints_Implementation() const override;
+	virtual void ShowMagicCircle_Implementation() override;
+	virtual void HideMagicCircle_Implementation() override;
+	virtual void SetMagicCircleMaterial_Implementation(UMaterialInterface* Mat) override;
 	/** end Player Interface */
 
 	/** Combat Interface */
