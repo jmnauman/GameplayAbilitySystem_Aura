@@ -1,0 +1,23 @@
+
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "MagicCircleActor.generated.h"
+
+UCLASS()
+class AURA_API AMagicCircleActor : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	AMagicCircleActor();
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	virtual void BeginPlay() override;
+	
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UDecalComponent> DecalComponent;
+};
