@@ -37,13 +37,17 @@ void AAuraPlayerController::ShowMagicCircle()
 	{
 		MagicCircle = GetWorld()->SpawnActor<AMagicCircleActor>(MagicCircleActorClass);
 		MagicCircle->SetActorLocation(CursorHit.ImpactPoint);
+		bShowMouseCursor = true;
 	}
 }
 
 void AAuraPlayerController::HideMagicCircle()
 {
 	if (IsValid(MagicCircle))
+	{
 		MagicCircle->Destroy();
+		bShowMouseCursor = false;
+	}
 }
 
 void AAuraPlayerController::SetMagicCircleMaterial(UMaterialInterface* Mat)
